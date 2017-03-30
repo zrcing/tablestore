@@ -228,6 +228,10 @@ class Model implements ModelInterface
         return $model;
     }
 
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
     public function getRequest()
     {
         return $this->request;
@@ -248,5 +252,23 @@ class Model implements ModelInterface
             'attribute_columns_to_put' => $this->columns,
         ];
         static::getDb()->updateRow($this->request);
+    }
+
+    public static function createTable()
+    {
+        $o = new static();
+        $o->setRequest([
+            'table_meta' => [
+                'table_name' => static::getTable(),
+                'primary_key_schema' => static::getPrimaryKey()
+            ],
+            'reserved_throughput' => [
+                'capacity_unit' => [
+                    'read' => 0, // 预留读写吞吐量设置为：0个读CU，和0个写CU
+                    'write' => 0
+                ]
+            ]
+        ]);
+        static::getDb()->createTable($o->getRequest());
     }
 }

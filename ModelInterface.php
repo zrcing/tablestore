@@ -33,6 +33,12 @@ interface ModelInterface
     public function setExceptionConst($const = RowExistenceExpectationConst::CONST_IGNORE);
 
     /**
+     * @param array $request
+     * @return void
+     */
+    public function setRequest($request);
+
+    /**
      * Get tabletore request
      * @return mixed
      */
@@ -70,4 +76,10 @@ interface ModelInterface
      * @return mixed
      */
     public function save();
+
+    /**
+     * Create table in tablestore
+     * @return void
+     */
+    public static function createTable();
 }
