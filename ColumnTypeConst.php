@@ -5,7 +5,8 @@
 namespace Planfox\Component\Tablestore;
 
 /* 该类被使用于描述主键和属性列的数据类型。 */
-class ColumnTypeConst {
+class ColumnTypeConst
+{
     const CONST_STRING = 'STRING';
     const CONST_INTEGER = 'INTEGER';
     const CONST_BOOLEAN = 'BOOLEAN';
@@ -13,7 +14,9 @@ class ColumnTypeConst {
     const CONST_BINARY = 'BINARY';
     const CONST_INF_MIN = 'INF_MIN';
     const CONST_INF_MAX = 'INF_MAX';
-    static public function values() {
+
+    public static function values()
+    {
         return array (
             ColumnTypeConst::CONST_BINARY,
             ColumnTypeConst::CONST_BOOLEAN,
@@ -24,7 +27,9 @@ class ColumnTypeConst {
             ColumnTypeConst::CONST_INF_MIN
         );
     }
-    static public function members() {
+
+    public static function members()
+    {
         return array (
             'ColumnTypeConst::CONST_BINARY',
             'ColumnTypeConst::CONST_BOOLEAN',
