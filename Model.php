@@ -2,10 +2,10 @@
 /**
  * @author Liao Gengling <liaogling@gmail.com>
  */
-namespace Netty\Component\Tablestore;
+namespace Planfox\Component\Tablestore;
 
 use Aliyun\OTS\RowExistenceExpectationConst;
-use Netty\Component\Tablestore\Exception\InvalidArgumentException;
+use Planfox\Component\Tablestore\Exception\InvalidArgumentException;
 
 class Model implements ModelInterface
 {
@@ -63,7 +63,7 @@ class Model implements ModelInterface
      */
     public static function getDb()
     {
-        return \Netty::app('Ots');
+        return \Planfox::app('Ots');
     }
 
     public function __set($name, $value)

@@ -2,7 +2,7 @@
 /**
  * @author Liao Gengling <liaogling@gmail.com>
  */
-namespace Netty\Component\Tablestore;
+namespace Planfox\Component\Tablestore;
 
 /* 该类被使用于描述主键和属性列的数据类型。 */
 class ColumnTypeConst {

@@ -2,7 +2,7 @@
 /**
  * @author Liao Gengling <liaogling@gmail.com>
  */
-namespace Netty\Component\Tablestore\Exception;
+namespace Planfox\Component\Tablestore\Exception;
 
 interface ExceptionInterface
 {

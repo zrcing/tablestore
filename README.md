@@ -1,14 +1,14 @@
-## Netty Tablestore Component
+## Planfox Tablestore Component
 
-The Netty Tablestore Component is a aliyun tablestore toolkit for PHP, providing an expressive query builder, ActiveRecord style ORM, and schema builder.
+The Planfox Tablestore Component is a aliyun tablestore toolkit for PHP, providing an expressive query builder, ActiveRecord style ORM, and schema builder.
 
 ### Usage Instructions
 
 ```
 namespace App\TableStore;
 
-use Netty\Component\Tablestore\Model;
-use Netty\Component\Tablestore\ColumnTypeConst as TypeConst;
+use Planfox\Component\Tablestore\Model;
+use Planfox\Component\Tablestore\ColumnTypeConst as TypeConst;
 
 class User extends Model
 {
@@ -35,5 +35,5 @@ Easy use aliyun tablestore
 
 ### License
 
-The Netty Tablestore Component is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The Planfox Tablestore Component is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
