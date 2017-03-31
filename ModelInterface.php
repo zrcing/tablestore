@@ -23,7 +23,7 @@ interface ModelInterface
     /**
      * @return \Aliyun\OTS\OTSClient;
      */
-    public static function getDb();
+    public function getDb();
 
     /**
      * Set expect type when put data to tablestore
@@ -40,18 +40,21 @@ interface ModelInterface
 
     /**
      * Get tabletore request
+     *
      * @return mixed
      */
     public function getRequest();
 
     /**
      * Get tabletore response
+     *
      * @return mixed
      */
     public function getResponse();
 
     /**
      * Tablestore primary value
+     *
      * @param array $value
      * @return void
      */
@@ -59,6 +62,7 @@ interface ModelInterface
 
     /**
      * Find tablestore data
+     *
      * @param array $value
      * @return Model|null
      */
@@ -66,6 +70,7 @@ interface ModelInterface
 
     /**
      * Find or new tablestore data
+     *
      * @param array $value
      * @return Model
      */
@@ -73,12 +78,14 @@ interface ModelInterface
 
     /**
      * Put data to tablestore[attribute_columns_to_put]
+     *
      * @return mixed
      */
     public function save();
 
     /**
      * Create table in tablestore
+     *
      * @return void
      */
     public static function createTable();

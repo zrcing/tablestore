@@ -10,6 +10,12 @@ use Planfox\Component\Tablestore\Exception\InvalidArgumentException;
 class Model implements ModelInterface
 {
     /**
+     * Default connection tablestore
+     * @var string
+     */
+    protected $connection = 'default';
+
+    /**
      * @var string TableStore table name
      */
     protected static $table;
@@ -61,14 +67,14 @@ class Model implements ModelInterface
     /**
      * @return \Aliyun\OTS\OTSClient;
      */
-    public static function getDb()
+    public function getDb()
     {
-        return \Planfox::app('Ots');
+        return Connection::getDb($this->connection);
     }
 
     public function __set($name, $value)
     {
-        $this->invalidColumn($name);
+        $this->verifyColumn($name);
         $this->columns[$name] = $value;
     }
 
@@ -79,7 +85,7 @@ class Model implements ModelInterface
 
     public function __get($name)
     {
-        $this->invalidColumn($name);
+        $this->verifyColumn($name);
         return isset($this->columns[$name]) ? $this->columns[$name] : null;
     }
 
@@ -90,7 +96,7 @@ class Model implements ModelInterface
         }
     }
 
-    private function invalidColumn($name)
+    private function verifyColumn($name)
     {
         if (! in_array($name, static::$fields)) {
             throw new InvalidArgumentException('Invalid column fields.');
@@ -98,7 +104,7 @@ class Model implements ModelInterface
         return $this;
     }
 
-    private function invalidPrimaryValue()
+    private function verifyPrimaryValue()
     {
         if (! $this->primaryValue) {
             throw new InvalidArgumentException('Primary value is empty.');
@@ -193,7 +199,7 @@ class Model implements ModelInterface
             'table_name' => static::getTable(),
             'primary_key' => $this->primaryValue
         );
-        $this->setResponse(static::getDb()->getRow($this->request));
+        $this->setResponse($this->getDb()->getRow($this->request));
 
         return empty($this->responseKeys) ? null : $this;
     }
@@ -244,14 +250,14 @@ class Model implements ModelInterface
 
     public function save()
     {
-        $this->invalidPrimaryValue();
+        $this->verifyPrimaryValue();
         $this->request = [
             'table_name' => static::getTable(),
             'condition' => $this->expectionConst,
             'primary_key' => $this->primaryValue,
             'attribute_columns_to_put' => $this->columns,
         ];
-        static::getDb()->updateRow($this->request);
+        $this->getDb()->updateRow($this->request);
     }
 
     public static function createTable()
@@ -269,6 +275,7 @@ class Model implements ModelInterface
                 ]
             ]
         ]);
-        static::getDb()->createTable($o->getRequest());
+        $o->getDb()->createTable($o->getRequest());
+
     }
 }
