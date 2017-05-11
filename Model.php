@@ -183,7 +183,7 @@ class Model implements ModelInterface
         $this->primaryValue = $this->createRequestPrimaryKey($value);
     }
 
-    private function setResponse($response)
+    public function setResponse($response)
     {
         $this->response = $response;
         $this->responseKeys = $response['row']['primary_key_columns'];
@@ -234,6 +234,41 @@ class Model implements ModelInterface
         return $model;
     }
 
+    /**
+     * @param array $startPK
+     * @param array $endPK
+     * @param DirectionConst $direction
+     * @param int $limit
+     * @return mixed
+     */
+    public static function findAll($startPK, $endPK, $direction = DirectionConst::CONST_FORWARD, $limit = 5000)
+    {
+        $records = [];
+        $o = new static();
+        while (! empty ($startPK) && $limit > 0) {
+
+            $o->setRequest(array (
+                'table_name' => static::getTable(),
+                'direction' => $direction,
+                'inclusive_start_primary_key' => $startPK, // 开始主键
+                'exclusive_end_primary_key' => $endPK, // 结束主键
+                'limit' => $limit
+            ));
+            $response = $o->getDb()->getRange($o->getRequest());
+            foreach ($response['rows'] as $rowData) {
+                $limit --;
+                $temp = new static();
+                $temp->setPrimaryValue(array_values($rowData['primary_key_columns']));
+                $temp->setResponse($rowData['attribute_columns']);
+                $records[] = $temp;
+                // 处理每一行数据
+            }
+
+            $startPK = $response['next_start_primary_key'];
+        }
+        return $records;
+    }
+
     public function setRequest($request)
     {
         $this->request = $request;
@@ -258,6 +293,17 @@ class Model implements ModelInterface
             'attribute_columns_to_put' => $this->columns,
         ];
         $this->getDb()->updateRow($this->request);
+    }
+
+    public function delete()
+    {
+        $this->verifyPrimaryValue();
+        $this->request = [
+            'table_name' => static::getTable(),
+            'condition' => $this->expectionConst,
+            'primary_key' => $this->primaryValue
+        ];
+        $this->getDb()->deleteRow($this->request);
     }
 
     public static function createTable()
