@@ -259,7 +259,7 @@ class Model implements ModelInterface
                 $limit --;
                 $temp = new static();
                 $temp->setPrimaryValue(array_values($rowData['primary_key_columns']));
-                $temp->setResponse($rowData['attribute_columns']);
+                $temp->setResponse(['row' => $rowData]);
                 $records[] = $temp;
                 // 处理每一行数据
             }
